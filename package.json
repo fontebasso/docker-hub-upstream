@@ -2,15 +2,27 @@
   "name": "docker-hub-upstream",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
+  "main": "lib/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
     "start:dev": "npx nodemon",
     "format": "prettier --write '**/*.ts'",
     "format-check": "prettier --check '**/*.ts'",
-    "lint": "eslint src/**/*.ts"
+    "lint": "eslint src/**/*.ts",
+    "package": "ncc build --source-map --license licenses.txt",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fontebasso/docker-hub-upstream.git"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "setup",
+    "docker",
+    "docker hub"
+  ],
   "author": "Samuel Fontebasso <samuel.txd@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -19,6 +31,7 @@
   },
   "devDependencies": {
     "@types/node": "^18.14.1",
+    "@vercel/ncc": "^0.36.1",
     "eslint": "^8.34.0",
     "eslint-plugin-github": "^4.6.1",
     "eslint-plugin-jest": "^27.2.1",
