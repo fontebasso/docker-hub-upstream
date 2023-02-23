@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import {exec} from 'child_process'
 import * as core from '@actions/core'
 import github from '@actions/github'
+import fetch from 'node-fetch'
 
 async function run(): Promise<void> {
   const inputImage = core.getInput('image')
@@ -201,7 +202,7 @@ async function getDockerHubVersion(
 ): Promise<{tag: string; updated_at: string}> {
   const url = `https://hub.docker.com/v2/repositories/${image}/tags/${tag}`
   const response = await fetch(url)
-  const json = await response.json()
+  const json = (await response.json()) as any
   return {tag: json.name, updated_at: json.last_updated}
 }
 
