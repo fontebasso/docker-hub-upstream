@@ -65,6 +65,7 @@ function run() {
                 const pullRequest = yield createPullRequest(branchName);
                 yield mergePullRequest(pullRequest);
                 yield deleteBranch(branchName);
+                console.log('Branch deleted');
                 const version = yield getLastedPublishedVersion();
                 console.log(`Lasted published version: ${version}`);
                 const newVersion = yield increaseMinorPatchVersion(version);

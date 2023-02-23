@@ -25,6 +25,7 @@ async function run(): Promise<void> {
       const pullRequest = await createPullRequest(branchName)
       await mergePullRequest(pullRequest)
       await deleteBranch(branchName)
+      console.log('Branch deleted')
       const version = await getLastedPublishedVersion()
       console.log(`Lasted published version: ${version}`)
       const newVersion = await increaseMinorPatchVersion(version)
