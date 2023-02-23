@@ -204,3 +204,5 @@ async function getDockerHubVersion(
   const json = await response.json()
   return {tag: json.name, updated_at: json.last_updated}
 }
+
+run()
