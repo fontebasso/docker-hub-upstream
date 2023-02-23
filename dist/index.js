@@ -61,6 +61,7 @@ function run() {
                 core.setOutput('updated_at', dockerHubImage.updated_at);
                 yield updateLocalImage(inputImage, dockerHubImage.tag, dockerHubImage.updated_at);
                 const branchName = `update-docker-image-versions-${Date.now()}`;
+                yield setupGitUser();
                 yield createNewBranch(branchName);
                 yield commitChanges();
                 yield pushChanges(branchName);
@@ -80,6 +81,26 @@ function run() {
         }
     });
 }
+function setupGitUser() {
+    return __awaiter(this, void 0, void 0, function* () {
+        (0, child_process_1.exec)(`git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com"`, (error, stdout, stderr) => {
+            if (error) {
+                core.setFailed(error.message);
+            }
+            if (stderr) {
+                core.setFailed(stderr);
+            }
+        });
+        (0, child_process_1.exec)(`git config --global user.name "github-actions[bot]"`, (error, stdout, stderr) => {
+            if (error) {
+                core.setFailed(error.message);
+            }
+            if (stderr) {
+                core.setFailed(stderr);
+            }
+        });
+    });
+}
 function createNewBranch(branchName) {
     return __awaiter(this, void 0, void 0, function* () {
         (0, child_process_1.exec)(`git checkout -b ${branchName}`, (error, stdout, stderr) => {
@@ -94,7 +115,7 @@ function createNewBranch(branchName) {
 }
 function commitChanges() {
     return __awaiter(this, void 0, void 0, function* () {
-        (0, child_process_1.exec)(`git add .`, (error, stdout, stderr) => {
+        (0, child_process_1.exec)(`git add docker-image-versions.json`, (error, stdout, stderr) => {
             if (error) {
                 core.setFailed(error.message);
             }

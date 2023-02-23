@@ -21,6 +21,7 @@ async function run(): Promise<void> {
         dockerHubImage.updated_at
       )
       const branchName = `update-docker-image-versions-${Date.now()}`
+      await setupGitUser()
       await createNewBranch(branchName)
       await commitChanges()
       await pushChanges(branchName)
@@ -38,6 +39,32 @@ async function run(): Promise<void> {
   }
 }
 
+async function setupGitUser(): Promise<void> {
+  exec(
+    `git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com"`,
+    (error, stdout, stderr) => {
+      if (error) {
+        core.setFailed(error.message)
+      }
+      if (stderr) {
+        core.setFailed(stderr)
+      }
+    }
+  )
+
+  exec(
+    `git config --global user.name "github-actions[bot]"`,
+    (error, stdout, stderr) => {
+      if (error) {
+        core.setFailed(error.message)
+      }
+      if (stderr) {
+        core.setFailed(stderr)
+      }
+    }
+  )
+}
+
 async function createNewBranch(branchName: string): Promise<void> {
   exec(`git checkout -b ${branchName}`, (error, stdout, stderr) => {
     if (error) {
@@ -50,7 +77,7 @@ async function createNewBranch(branchName: string): Promise<void> {
 }
 
 async function commitChanges(): Promise<void> {
-  exec(`git add .`, (error, stdout, stderr) => {
+  exec(`git add docker-image-versions.json`, (error, stdout, stderr) => {
     if (error) {
       core.setFailed(error.message)
     }
