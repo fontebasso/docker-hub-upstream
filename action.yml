@@ -1,6 +1,9 @@
 name: 'Docker Hub Upstream'
 description: 'Monitor updates to Docker images and automatically perform a commit and release on your project.'
 author: 'Samuel Fontebasso'
+branding:
+  icon: 'cloud-rain'
+  color: 'gray-dark'
 inputs:
   token:
     required: true
