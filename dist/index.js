@@ -45,7 +45,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const fs = __importStar(__nccwpck_require__(7147));
 const child_process_1 = __nccwpck_require__(2081);
 const core = __importStar(__nccwpck_require__(2186));
-const github_1 = __importDefault(__nccwpck_require__(5438));
+const github = __importStar(__nccwpck_require__(5438));
 const node_fetch_1 = __importDefault(__nccwpck_require__(4429));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -126,8 +126,8 @@ function pushChanges(branchName) {
 }
 function createPullRequest(branchName) {
     return __awaiter(this, void 0, void 0, function* () {
-        const octokit = github_1.default.getOctokit(core.getInput('token'));
-        const { owner, repo } = github_1.default.context.repo;
+        const octokit = github.getOctokit(core.getInput('token'));
+        const { owner, repo } = github.context.repo;
         const pullRequest = yield octokit.rest.pulls.create({
             owner,
             repo,
@@ -143,8 +143,8 @@ function createPullRequest(branchName) {
 }
 function mergePullRequest(pullRequest) {
     return __awaiter(this, void 0, void 0, function* () {
-        const octokit = github_1.default.getOctokit(core.getInput('token'));
-        const { owner, repo } = github_1.default.context.repo;
+        const octokit = github.getOctokit(core.getInput('token'));
+        const { owner, repo } = github.context.repo;
         yield octokit.rest.pulls.merge({
             owner,
             repo,
@@ -154,8 +154,8 @@ function mergePullRequest(pullRequest) {
 }
 function deleteBranch(branchName) {
     return __awaiter(this, void 0, void 0, function* () {
-        const octokit = github_1.default.getOctokit(core.getInput('token'));
-        const { owner, repo } = github_1.default.context.repo;
+        const octokit = github.getOctokit(core.getInput('token'));
+        const { owner, repo } = github.context.repo;
         yield octokit.rest.git.deleteRef({
             owner,
             repo,
@@ -165,8 +165,8 @@ function deleteBranch(branchName) {
 }
 function getLastedPublishedVersion() {
     return __awaiter(this, void 0, void 0, function* () {
-        const octokit = github_1.default.getOctokit(core.getInput('token'));
-        const { owner, repo } = github_1.default.context.repo;
+        const octokit = github.getOctokit(core.getInput('token'));
+        const { owner, repo } = github.context.repo;
         const releases = yield octokit.rest.repos.listReleases({
             owner,
             repo
@@ -185,8 +185,8 @@ function increaseMinorPatchVersion(version) {
 }
 function publishRelease(version) {
     return __awaiter(this, void 0, void 0, function* () {
-        const octokit = github_1.default.getOctokit(core.getInput('token'));
-        const { owner, repo } = github_1.default.context.repo;
+        const octokit = github.getOctokit(core.getInput('token'));
+        const { owner, repo } = github.context.repo;
         yield octokit.rest.repos.createRelease({
             owner,
             repo,

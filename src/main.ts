@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import {exec} from 'child_process'
 import * as core from '@actions/core'
-import github from '@actions/github'
+import * as github from '@actions/github'
 import fetch from 'node-fetch'
 
 async function run(): Promise<void> {
