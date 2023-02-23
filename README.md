@@ -35,7 +35,7 @@ The date and time the image was last updated.
 ```yaml
 uses: docker-hub-upstream@v1
 with:
-  image: '_/alpine'
+  image: 'library/alpine'
   tag: '3.16'
 ```
 
@@ -61,5 +61,5 @@ jobs:
       uses: docker-hub-upstream@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        image: '_/alpine'
+        image: 'library/alpine'
         tag: '3.16'
