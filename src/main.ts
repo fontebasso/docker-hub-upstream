@@ -26,7 +26,9 @@ async function run(): Promise<void> {
       await mergePullRequest(pullRequest)
       await deleteBranch(branchName)
       const version = await getLastedPublishedVersion()
+      console.log(`Lasted published version: ${version}`)
       const newVersion = await increaseMinorPatchVersion(version)
+      console.log(`New version: ${newVersion}`)
       await publishRelease(newVersion)
     } else {
       core.setOutput('update', false)
@@ -69,7 +71,7 @@ async function updateLocalImage(
   tag: string,
   updated_at: string
 ): Promise<void> {
-  let versions = {'${image}': {tag, updated_at}}
+  let versions = {[image]: {tag, updated_at}}
 
   if (fs.existsSync('docker-image-versions.json')) {
     const content = fs.readFileSync('docker-image-versions.json', 'utf8')
@@ -156,7 +158,7 @@ async function getLastedPublishedVersion(): Promise<string> {
 
 async function increaseMinorPatchVersion(version: string): Promise<string> {
   const [major, minor, patch] = version.split('.')
-  return `${major}.${parseInt(minor) + 1}.${parseInt(patch) + 1}`
+  return `${major}.${minor}.${parseInt(patch) + 1}`
 }
 
 async function publishRelease(version: string): Promise<void> {

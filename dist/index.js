@@ -66,7 +66,9 @@ function run() {
                 yield mergePullRequest(pullRequest);
                 yield deleteBranch(branchName);
                 const version = yield getLastedPublishedVersion();
+                console.log(`Lasted published version: ${version}`);
                 const newVersion = yield increaseMinorPatchVersion(version);
+                console.log(`New version: ${newVersion}`);
                 yield publishRelease(newVersion);
             }
             else {
@@ -107,7 +109,7 @@ function getLocalImage(image) {
 }
 function updateLocalImage(image, tag, updated_at) {
     return __awaiter(this, void 0, void 0, function* () {
-        let versions = { '${image}': { tag, updated_at } };
+        let versions = { [image]: { tag, updated_at } };
         if (fs.existsSync('docker-image-versions.json')) {
             const content = fs.readFileSync('docker-image-versions.json', 'utf8');
             versions = JSON.parse(content);
@@ -194,7 +196,7 @@ function getLastedPublishedVersion() {
 function increaseMinorPatchVersion(version) {
     return __awaiter(this, void 0, void 0, function* () {
         const [major, minor, patch] = version.split('.');
-        return `${major}.${parseInt(minor) + 1}.${parseInt(patch) + 1}`;
+        return `${major}.${minor}.${parseInt(patch) + 1}`;
     });
 }
 function publishRelease(version) {
