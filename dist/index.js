@@ -64,12 +64,8 @@ function run() {
                 yield commitChanges(branchName);
                 const pullRequest = yield createPullRequest(branchName);
                 yield mergePullRequest(pullRequest);
-                yield deleteBranch(branchName);
-                console.log('Branch deleted');
                 const version = yield getLastedPublishedVersion();
-                console.log(`Lasted published version: ${version}`);
                 const newVersion = yield increaseMinorPatchVersion(version);
-                console.log(`New version: ${newVersion}`);
                 yield publishRelease(newVersion);
             }
             else {
@@ -166,17 +162,6 @@ function mergePullRequest(pullRequest) {
             owner,
             repo,
             pull_number: pullRequest
-        });
-    });
-}
-function deleteBranch(branchName) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const octokit = github.getOctokit(core.getInput('token'));
-        const { owner, repo } = github.context.repo;
-        yield octokit.rest.git.deleteRef({
-            owner,
-            repo,
-            ref: `heads/${branchName}`
         });
     });
 }

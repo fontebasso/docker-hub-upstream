@@ -24,12 +24,8 @@ async function run(): Promise<void> {
       await commitChanges(branchName)
       const pullRequest = await createPullRequest(branchName)
       await mergePullRequest(pullRequest)
-      await deleteBranch(branchName)
-      console.log('Branch deleted')
       const version = await getLastedPublishedVersion()
-      console.log(`Lasted published version: ${version}`)
       const newVersion = await increaseMinorPatchVersion(version)
-      console.log(`New version: ${newVersion}`)
       await publishRelease(newVersion)
     } else {
       core.setOutput('update', false)
@@ -131,16 +127,6 @@ async function mergePullRequest(pullRequest: number): Promise<void> {
     owner,
     repo,
     pull_number: pullRequest
-  })
-}
-
-async function deleteBranch(branchName: string): Promise<void> {
-  const octokit = github.getOctokit(core.getInput('token'))
-  const {owner, repo} = github.context.repo
-  await octokit.rest.git.deleteRef({
-    owner,
-    repo,
-    ref: `heads/${branchName}`
   })
 }
 
