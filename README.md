@@ -6,7 +6,9 @@ This project leverages GitHub Actions to monitor updates to Docker images and au
 
 ### `token`
 
-**Required** The GitHub token to use for the commit.
+**Required** The Personal Access Token.
+
+Generate token here: https://github.com/settings/tokens
 
 ### `image`
 
@@ -58,8 +60,8 @@ jobs:
       with:
         fetch-depth: 0
     - name: Update Docker image
-      uses: docker-hub-upstream@v1
+      uses: fontebasso/docker-hub-upstream@v1
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.MY_TOKEN }}
         image: 'library/alpine'
         tag: '3.16'
