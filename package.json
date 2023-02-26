@@ -1,7 +1,7 @@
 {
   "name": "docker-hub-upstream",
   "version": "1.0.0",
-  "description": "",
+  "description": "This project leverages GitHub Actions to monitor updates to Docker images and automatically perform a commit and release on your project.",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
